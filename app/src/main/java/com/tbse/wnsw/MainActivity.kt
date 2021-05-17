@@ -5,9 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.tbse.wnsw.models.AccessPoint
+import com.tbse.wnsw.ui.aplist.AccessPointList
+import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProvider
+import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProviderMany
 import com.tbse.wnsw.ui.theme.NewWNSWTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,22 +20,23 @@ class MainActivity : ComponentActivity() {
             NewWNSWTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                    AccessPointList(
+                        itemViewStates =
+                        AccessPointPreviewProviderMany().values.toList()
+                    )
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     NewWNSWTheme {
-        Greeting("Android")
+        AccessPointList(
+            itemViewStates =
+            AccessPointPreviewProviderMany().values.toList()
+        )
     }
 }
