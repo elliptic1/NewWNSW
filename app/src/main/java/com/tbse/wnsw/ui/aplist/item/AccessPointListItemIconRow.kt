@@ -35,12 +35,11 @@ fun AccessPointListItemIconRow(
             .fillMaxHeight()
     ) {
         Text(
-            text = "${accessPoint.strength}%%",
+            text = "${accessPoint.strength}%",
             fontSize = 15.sp,
             color = colorResource(R.color.clouds),
             textAlign = TextAlign.Center,
             modifier = Modifier
-                .size(20.dp)
                 .align(Alignment.CenterVertically)
         )
         Image(
