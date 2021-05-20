@@ -2,6 +2,7 @@
 buildscript {
     val composeVersion by extra("1.0.0-beta06")
     val hiltVersion by extra("2.35")
+
     repositories {
         google()
         mavenCentral()
