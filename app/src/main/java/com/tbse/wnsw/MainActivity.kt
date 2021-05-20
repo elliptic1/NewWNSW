@@ -12,7 +12,9 @@ import com.tbse.wnsw.ui.aplist.AccessPointList
 import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProvider
 import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProviderMany
 import com.tbse.wnsw.ui.theme.NewWNSWTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
