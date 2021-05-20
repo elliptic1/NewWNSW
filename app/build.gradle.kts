@@ -51,6 +51,8 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling:${rootProject.extra["composeVersion"]}")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-alpha01")
     implementation("androidx.activity:activity-compose:1.3.0-alpha07")
+    implementation("com.google.dagger:hilt-android:${rootProject.extra["hiltVersion"]}")
+//    kapt("com.google.dagger:hilt-android-compiler:${rootProject.extra["hiltVersion"]}")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.2")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
