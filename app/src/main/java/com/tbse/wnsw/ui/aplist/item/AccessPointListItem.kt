@@ -10,7 +10,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.tbse.wnsw.R
 import com.tbse.wnsw.models.AccessPoint
-import com.tbse.wnsw.ui.aplist.AccessPointListItemIconRow
 import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProvider
 
 /**
@@ -35,15 +34,15 @@ fun AccessPointListItem(
                 .fillMaxWidth(0.5f)
                 .fillMaxHeight()
         ) {
-            AccessPointListItemSSID(accessPoint)
-            AccessPointListItemBSSID(accessPoint)
+            AccessPointListItemSSID(accessPoint.SSID)
+            AccessPointListItemBSSID(accessPoint.BSSID)
         }
         Column(
             Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
         ) {
-            AccessPointListItemAutoSwitch(accessPoint)
+            AccessPointListItemSuggestButton(accessPoint)
             AccessPointListItemIconRow(accessPoint)
         }
     }

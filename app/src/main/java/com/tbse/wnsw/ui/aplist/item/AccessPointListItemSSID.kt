@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.sp
 import com.tbse.wnsw.R
 import com.tbse.wnsw.models.AccessPoint
 import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProvider
+import com.tbse.wnsw.ui.aplist.preview.SSIDPreviewProvider
 
 /**
  * Created by toddsmith on 5/15/21.
@@ -24,8 +25,8 @@ import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProvider
 @Composable
 fun AccessPointListItemSSID(
     @PreviewParameter(
-        provider = AccessPointPreviewProvider::class
-    ) accessPoint: AccessPoint
+        provider = SSIDPreviewProvider::class
+    ) SSID: String
 ) {
     Box(
         modifier = Modifier
@@ -34,7 +35,7 @@ fun AccessPointListItemSSID(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = accessPoint.SSID,
+            text = SSID,
             fontSize = 26.sp,
             color = colorResource(R.color.clouds),
             textAlign = TextAlign.Center,

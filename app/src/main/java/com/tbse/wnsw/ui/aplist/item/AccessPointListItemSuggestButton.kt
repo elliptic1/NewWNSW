@@ -25,9 +25,9 @@ import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProvider
  */
 @Preview
 @Composable
-fun AccessPointListItemAutoSwitchContent() {
+fun AccessPointListItemSuggestButtonContent() {
     Text(
-        "AUTO-SWITCH",
+        "FAVORITE",
         fontSize = 20.sp,
         color = colorResource(R.color.darkgrey),
         modifier = Modifier
@@ -41,7 +41,7 @@ fun AccessPointListItemAutoSwitchContent() {
  */
 @Preview
 @Composable
-fun AccessPointListItemAutoSwitch(
+fun AccessPointListItemSuggestButton(
     @PreviewParameter(
         provider = AccessPointPreviewProvider::class
     ) accessPoint: AccessPoint
@@ -69,7 +69,7 @@ fun AccessPointListItemAutoSwitch(
                 .wrapContentWidth()
                 .align(Alignment.Center)
         ) {
-            AccessPointListItemAutoSwitchContent()
+            AccessPointListItemSuggestButtonContent()
         }
     }
 }

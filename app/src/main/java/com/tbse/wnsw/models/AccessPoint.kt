@@ -6,12 +6,13 @@ package com.tbse.wnsw.models
  */
 data class AccessPoint(
     val BSSID: String,
-    var SSID: String,
-    var capabilities: String,
-    var frequency: Int,
-    var level: Int,
-    var strength: Int,
-    var channel: Int,
-    var latitude: Double,
-    var longitude: Double
+    val SSID: String,
+    val capabilities: String,
+    val frequency: Int,
+    val level: Int,
+    val strength: Int,
+    val channel: Int,
+    val latitude: Double,
+    val longitude: Double,
+    val isSuggested: Boolean
 )
