@@ -1,3 +1,7 @@
+/**
+ * Created by toddsmith on 5/15/21.
+ * Copyright TBSE 2017
+ */
 package com.tbse.wnsw.ui.aplist.item
 
 import android.util.Log
@@ -18,11 +22,6 @@ import com.tbse.wnsw.R
 import com.tbse.wnsw.models.AccessPoint
 import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProvider
 
-
-/**
- * Created by toddsmith on 5/15/21.
- * Copyright TBSE 2017
- */
 @Preview
 @Composable
 fun AccessPointListItemSuggestButtonContent() {
@@ -35,10 +34,6 @@ fun AccessPointListItemSuggestButtonContent() {
     )
 }
 
-/**
- * Created by toddsmith on 5/15/21.
- * Copyright TBSE 2017
- */
 @Preview
 @Composable
 fun AccessPointListItemSuggestButton(

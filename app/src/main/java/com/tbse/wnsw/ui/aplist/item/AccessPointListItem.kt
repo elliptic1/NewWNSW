@@ -1,7 +1,11 @@
 package com.tbse.wnsw.ui.aplist.item
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -21,7 +25,7 @@ import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProvider
 fun AccessPointListItem(
     @PreviewParameter(
         provider = AccessPointPreviewProvider::class
-    ) accessPoint: AccessPoint
+    ) accessPoint: AccessPoint,
 ) {
     Row(
         Modifier
@@ -35,7 +39,10 @@ fun AccessPointListItem(
                 .fillMaxHeight()
         ) {
             AccessPointListItemSSID(accessPoint.SSID)
-            AccessPointListItemBSSID(accessPoint.BSSID)
+            AccessPointListItemBSSID(
+                accessPoint.BSSID,
+                accessPoint.channel
+            )
         }
         Column(
             Modifier

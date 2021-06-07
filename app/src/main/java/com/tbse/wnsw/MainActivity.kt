@@ -95,7 +95,9 @@ class MainActivity : AppCompatActivity(),
                     if (wifiManager != null) {
                         AccessPointList(
                             itemViewStates =
-                            wifiManager.scanResults.map { apTransformer(it, wifiManager) }
+                            wifiManager
+                                .scanResults
+                                .map { apTransformer(it, wifiManager) }
                         )
                     } else {
                         Text("Need permissions")

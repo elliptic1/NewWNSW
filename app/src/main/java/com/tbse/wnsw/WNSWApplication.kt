@@ -10,3 +10,5 @@ import android.app.Application
 //@HiltAndroidApp
 class WNSWApplication : Application() {
 }
+
+const val TAG = "WNSW"

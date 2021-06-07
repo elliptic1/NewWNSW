@@ -12,7 +12,6 @@ android {
     defaultConfig {
         applicationId = "com.tbse.wnsw"
         minSdk = 30
-        targetSdkVersion("S")
         versionCode = 1
         versionName = "1.0"
 
@@ -44,7 +43,7 @@ android {
     }
 }
 
-val composeVersion  = "1.0.0-beta07" // https://developer.android.com/jetpack/androidx/releases/compose#versions
+val composeVersion  = "1.0.0-beta08" // https://developer.android.com/jetpack/androidx/releases/compose#versions
 
 dependencies {
 
@@ -55,7 +54,10 @@ dependencies {
     implementation("androidx.compose.material:material:$composeVersion")
     implementation("androidx.compose.ui:ui-tooling:$composeVersion")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-alpha01")
-    implementation("androidx.activity:activity-compose:1.3.0-alpha07")
+
+    // https://androidx.tech/artifacts/activity/activity-compose/
+    implementation("androidx.activity:activity-compose:1.3.0-beta01")
+
 //    implementation("com.google.dagger:hilt-android:${rootProject.extra["hiltVersion"]}")
 //    kapt("com.google.dagger:hilt-android-compiler:${rootProject.extra["hiltVersion"]}")
     testImplementation("junit:junit:4.13.2")

@@ -35,10 +35,18 @@ fun AccessPointListItemSSID(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = SSID,
+            text = SSID.defaultTo("-none-"),
             fontSize = 26.sp,
             color = colorResource(R.color.clouds),
             textAlign = TextAlign.Center,
         )
+    }
+}
+
+private fun String.defaultTo(def: String): String {
+    return if (this.isBlank()) {
+        def
+    } else {
+        this
     }
 }

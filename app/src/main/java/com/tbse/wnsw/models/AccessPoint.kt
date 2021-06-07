@@ -1,5 +1,8 @@
 package com.tbse.wnsw.models
 
+import android.util.Log
+import com.tbse.wnsw.TAG
+
 /**
  * Created by toddsmith on 5/15/21.
  * Copyright TBSE 2017
@@ -16,3 +19,7 @@ data class AccessPoint(
     val longitude: Double,
     val isSuggested: Boolean
 )
+
+fun AccessPoint.log() {
+    Log.d(TAG, "AP: $SSID, [$BSSID], ch $channel")
+}
