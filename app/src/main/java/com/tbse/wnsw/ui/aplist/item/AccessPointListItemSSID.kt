@@ -36,7 +36,7 @@ fun AccessPointListItemSSID(
     ) {
         Text(
             text = SSID.defaultTo("-none-"),
-            fontSize = 26.sp,
+            fontSize = 20.sp,
             color = colorResource(R.color.clouds),
             textAlign = TextAlign.Center,
         )
