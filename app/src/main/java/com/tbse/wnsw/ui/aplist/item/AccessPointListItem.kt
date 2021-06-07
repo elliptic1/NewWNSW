@@ -49,7 +49,7 @@ fun AccessPointListItem(
                 .fillMaxWidth()
                 .fillMaxHeight()
         ) {
-            AccessPointListItemSuggestButton(accessPoint)
+            AccessPointListItemSuggestSwitch(accessPoint)
             AccessPointListItemIconRow(accessPoint)
         }
     }

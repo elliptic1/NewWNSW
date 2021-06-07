@@ -19,7 +19,6 @@ fun AccessPointList(
     itemViewStates: List<AccessPoint>,
 ) {
     LazyColumn(modifier = modifier) {
-        itemViewStates.log()
         items(itemViewStates) { data ->
             AccessPointListItem(accessPoint = data)
         }
