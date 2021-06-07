@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import com.tbse.wnsw.TAG
 import com.tbse.wnsw.models.AccessPoint
 import com.tbse.wnsw.ui.aplist.item.AccessPointListItem
+import java.time.LocalTime
 
 /**
  * Created by toddsmith on 5/15/21.
@@ -17,6 +18,7 @@ import com.tbse.wnsw.ui.aplist.item.AccessPointListItem
 fun AccessPointList(
     modifier: Modifier = Modifier,
     itemViewStates: List<AccessPoint>,
+    lastLoad: LocalTime
 ) {
     LazyColumn(modifier = modifier) {
         items(itemViewStates) { data ->

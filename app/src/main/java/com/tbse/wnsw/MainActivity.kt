@@ -1,6 +1,8 @@
 package com.tbse.wnsw
 
-import android.Manifest.permission.*
+import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.Manifest.permission.ACCESS_WIFI_STATE
+import android.Manifest.permission.CHANGE_WIFI_STATE
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -9,12 +11,24 @@ import android.net.wifi.WifiManager
 import android.net.wifi.WifiManager.SCAN_RESULTS_AVAILABLE_ACTION
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.tbse.wnsw.models.transformers.ScanResultToAccessPointTransformer
@@ -22,6 +36,7 @@ import com.tbse.wnsw.ui.aplist.AccessPointList
 import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProviderMany
 import com.tbse.wnsw.ui.need_permissions.NeedPermissionsPage
 import com.tbse.wnsw.ui.theme.NewWNSWTheme
+import java.time.LocalTime
 
 const val PERMISSION_REQUEST_LOCATION = 0
 
@@ -45,7 +60,7 @@ class MainActivity : AppCompatActivity(),
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_REQUEST_LOCATION) {
@@ -90,6 +105,9 @@ class MainActivity : AppCompatActivity(),
         val wifiManager = getWifiManager()
         apTransformer = ScanResultToAccessPointTransformer()
         setContent {
+            val lastLoad = remember {
+                mutableStateOf(LocalTime.now())
+            }
             NewWNSWTheme {
                 Surface(color = MaterialTheme.colors.background) {
                     if (wifiManager != null) {
@@ -97,14 +115,36 @@ class MainActivity : AppCompatActivity(),
                             itemViewStates =
                             wifiManager
                                 .scanResults
-                                .map { apTransformer(it, wifiManager) }
+                                .map { apTransformer(it, wifiManager) },
+                            lastLoad = lastLoad.value
                         )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fillMaxHeight()
+                                .padding(20.dp),
+                            horizontalArrangement = Arrangement.End,
+                            verticalAlignment = Alignment.Bottom
+                        ) {
+                            FloatingActionButton(
+                                backgroundColor = Color.Green,
+                                content = { FABContent() },
+                                onClick = {
+                                    lastLoad.value = LocalTime.now()
+                                }
+                            )
+                        }
                     } else {
                         Text("Need permissions")
                     }
                 }
             }
         }
+    }
+
+    @Composable
+    fun FABContent() {
+        Text(text = "R")
     }
 
     override fun onPause() {
@@ -171,7 +211,8 @@ fun DefaultPreview() {
     NewWNSWTheme {
         AccessPointList(
             itemViewStates =
-            AccessPointPreviewProviderMany().values.toList()
+            AccessPointPreviewProviderMany().values.toList(),
+            lastLoad = LocalTime.now()
         )
     }
 }
