@@ -21,7 +21,10 @@ fun AccessPointList(
     lastLoad: LocalTime
 ) {
     LazyColumn(modifier = modifier) {
-        items(itemViewStates) { data ->
+        items(
+            items = itemViewStates,
+            key = { data -> data.BSSID }
+        ) { data ->
             AccessPointListItem(accessPoint = data)
         }
     }
