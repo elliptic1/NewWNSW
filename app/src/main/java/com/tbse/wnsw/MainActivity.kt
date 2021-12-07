@@ -12,7 +12,6 @@ import android.net.wifi.WifiManager.SCAN_RESULTS_AVAILABLE_ACTION
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,6 +35,7 @@ import com.tbse.wnsw.ui.aplist.AccessPointList
 import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProviderMany
 import com.tbse.wnsw.ui.need_permissions.NeedPermissionsPage
 import com.tbse.wnsw.ui.theme.NewWNSWTheme
+import com.tbse.wnsw.wifiinfo.ScanResultsBroadcastReceiver
 import java.time.LocalTime
 
 const val PERMISSION_REQUEST_LOCATION = 0
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity(),
         super.onResume()
 
         if (hasPermissions()) {
-            receiver = ScanResultsBroadcastReceiver()
+            receiver = com.tbse.wnsw.wifiinfo.ScanResultsBroadcastReceiver()
             intentFilter = IntentFilter(SCAN_RESULTS_AVAILABLE_ACTION)
             registerReceiver(receiver, intentFilter, null, null)
 

@@ -7,7 +7,7 @@ buildscript {
     }
     dependencies {
         // https://maven.google.com/web/index.html?q=com.android.tools#com.android.tools.build:gradle
-        classpath("com.android.tools.build:gradle:7.2.0-alpha03")
+        classpath("com.android.tools.build:gradle:7.2.0-alpha05")
 
         // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-gradle-plugin
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")

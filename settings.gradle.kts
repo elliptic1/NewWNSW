@@ -7,3 +7,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "New WNSW"
 include(":app")
+include(":wifiInfo")
+include(":wifiInfoDatabase")
+include(":wifiDatabase")
+include(":wifiSupport")

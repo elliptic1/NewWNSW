@@ -1,10 +1,12 @@
-package com.tbse.wnsw
+package com.tbse.wnsw.wifiinfo
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import java.util.*
+import kotlin.Comparator
 
 /**
  * Created by toddsmith on 5/19/21.
@@ -21,7 +23,7 @@ class ScanResultsBroadcastReceiver : BroadcastReceiver() {
                 Log.d(TAG, log)
                 Toast.makeText(context, log, Toast.LENGTH_LONG).show()
             }
-            context.startActivity(MainActivity.getWifiScanIntent(context))
+//            context.startActivity(MainActivity.getWifiScanIntent(context))
         }
     }
 }

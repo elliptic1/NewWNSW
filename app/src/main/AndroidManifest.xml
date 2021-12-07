@@ -3,6 +3,7 @@
     package="com.tbse.wnsw">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
@@ -27,7 +28,7 @@
             </intent-filter>
         </activity>
         <receiver
-            android:name=".ScanResultsBroadcastReceiver"
+            android:name=".wifiinfo.ScanResultsBroadcastReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SCAN_RESULTS_AVAILABLE_ACTION" />

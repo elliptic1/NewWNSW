@@ -62,6 +62,8 @@ dependencies {
 
     // https://androidx.tech/artifacts/activity/activity-compose/
     implementation("androidx.activity:activity-compose:1.4.0")
+    implementation(project(mapOf("path" to ":wifiInfo")))
+    implementation(project(mapOf("path" to ":wifiSupport")))
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
