@@ -5,7 +5,7 @@ import android.app.Application
 
 /**
  * Created by toddsmith on 5/19/21.
- * Copyright TBSE 2017
+ * Copyright TBSE 2022
  */
 //@HiltAndroidApp
 class WNSWApplication : Application() {

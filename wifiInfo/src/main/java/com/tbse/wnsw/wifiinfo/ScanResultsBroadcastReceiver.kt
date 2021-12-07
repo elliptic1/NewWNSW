@@ -8,7 +8,7 @@ import android.widget.Toast
 
 /**
  * Created by toddsmith on 5/19/21.
- * Copyright TBSE 2017
+ * Copyright TBSE 2022
  */
 class ScanResultsBroadcastReceiver : BroadcastReceiver() {
     private val TAG = "ScanResultsBroadcastReceiver"

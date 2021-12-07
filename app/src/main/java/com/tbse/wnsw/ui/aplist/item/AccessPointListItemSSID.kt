@@ -19,7 +19,7 @@ import com.tbse.wnsw.ui.aplist.preview.SSIDPreviewProvider
 
 /**
  * Created by toddsmith on 5/15/21.
- * Copyright TBSE 2017
+ * Copyright TBSE 2022
  */
 @Preview
 @Composable

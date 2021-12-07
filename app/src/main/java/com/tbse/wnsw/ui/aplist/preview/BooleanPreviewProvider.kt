@@ -5,7 +5,7 @@ import kotlin.random.Random
 
 /**
  * Created by toddsmith on 5/16/21.
- * Copyright TBSE 2017
+ * Copyright TBSE 2022
  */
 class BooleanPreviewProvider : PreviewParameterProvider<Boolean> {
     override val values: Sequence<Boolean>

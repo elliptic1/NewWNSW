@@ -5,7 +5,7 @@ import kotlin.random.Random.Default.nextInt
 
 /**
  * Created by toddsmith on 5/16/21.
- * Copyright TBSE 2017
+ * Copyright TBSE 2022
  */
 internal object RandomMac {
     val randomMacAddress: String
