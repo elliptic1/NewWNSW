@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import com.tbse.wnsw.models.AccessPoint
+import com.tbse.wnsw.models.AccessPointUI
 import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProvider
 
 /**
@@ -21,7 +21,7 @@ import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProvider
 fun AccessPointListItemIconRow(
     @PreviewParameter(
         provider = AccessPointPreviewProvider::class
-    ) accessPoint: AccessPoint,
+    ) accessPoint: AccessPointUI,
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,

@@ -6,7 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.tbse.wnsw.TAG
-import com.tbse.wnsw.models.AccessPoint
+import com.tbse.wnsw.models.AccessPointUI
 import com.tbse.wnsw.ui.aplist.item.AccessPointListItem
 import java.time.LocalTime
 
@@ -17,7 +17,7 @@ import java.time.LocalTime
 @Composable
 fun AccessPointList(
     modifier: Modifier = Modifier,
-    itemViewStates: List<AccessPoint>,
+    itemViewStates: List<AccessPointUI>,
     lastLoad: LocalTime
 ) {
     LazyColumn(modifier = modifier) {
@@ -30,7 +30,7 @@ fun AccessPointList(
     }
 }
 
-private fun List<AccessPoint>.log() {
+private fun List<AccessPointUI>.log() {
     Log.d(TAG, "Access Points:")
     this.forEachIndexed { index, ap ->
         Log.d(TAG, " - $index. ${ap.SSID} [${ap.BSSID}]")

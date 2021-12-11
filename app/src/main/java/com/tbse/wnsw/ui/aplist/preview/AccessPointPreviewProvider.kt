@@ -1,17 +1,17 @@
 package com.tbse.wnsw.ui.aplist.preview
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.tbse.wnsw.models.AccessPoint
+import com.tbse.wnsw.models.AccessPointUI
 import kotlin.random.Random
 
 /**
  * Created by toddsmith on 5/16/21.
  * Copyright TBSE 2022
  */
-class AccessPointPreviewProvider : PreviewParameterProvider<AccessPoint> {
-    override val values: Sequence<AccessPoint>
+class AccessPointPreviewProvider : PreviewParameterProvider<AccessPointUI> {
+    override val values: Sequence<AccessPointUI>
         get() = sequenceOf(
-                AccessPoint(
+                AccessPointUI(
                         BSSID = RandomMac.randomMacAddress,
                         SSID = RandomString().random(),
                         capabilities = RandomString().random(),

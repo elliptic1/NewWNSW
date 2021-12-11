@@ -13,8 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.sp
 import com.tbse.wnsw.R
-import com.tbse.wnsw.models.AccessPoint
-import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProvider
 import com.tbse.wnsw.ui.aplist.preview.SSIDPreviewProvider
 
 /**

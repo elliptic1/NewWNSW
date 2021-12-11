@@ -35,7 +35,8 @@ import com.tbse.wnsw.ui.aplist.AccessPointList
 import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProviderMany
 import com.tbse.wnsw.ui.need_permissions.NeedPermissionsPage
 import com.tbse.wnsw.ui.theme.NewWNSWTheme
-import com.tbse.wnsw.wifiinfo.ScanResultsBroadcastReceiver
+import com.tbse.wnsw.wifiinfo.broadcast_receiver.ScanResultsBroadcastReceiver
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalTime
 
 const val PERMISSION_REQUEST_LOCATION = 0
@@ -46,7 +47,7 @@ val requiredPermissions = setOf(
     CHANGE_WIFI_STATE
 )
 
-//@AndroidEntryPoint
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(),
     ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -79,7 +80,7 @@ class MainActivity : AppCompatActivity(),
         super.onResume()
 
         if (hasPermissions()) {
-            receiver = com.tbse.wnsw.wifiinfo.ScanResultsBroadcastReceiver()
+            receiver = ScanResultsBroadcastReceiver()
             intentFilter = IntentFilter(SCAN_RESULTS_AVAILABLE_ACTION)
             registerReceiver(receiver, intentFilter, null, null)
 

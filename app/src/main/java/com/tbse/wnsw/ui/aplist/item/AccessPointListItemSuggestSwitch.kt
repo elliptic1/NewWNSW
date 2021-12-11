@@ -25,7 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import com.tbse.wnsw.models.AccessPoint
+import com.tbse.wnsw.models.AccessPointUI
 import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProvider
 
 @Preview
@@ -33,7 +33,7 @@ import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProvider
 fun AccessPointListItemSuggestSwitch(
     @PreviewParameter(
         provider = AccessPointPreviewProvider::class
-    ) accessPoint: AccessPoint,
+    ) accessPoint: AccessPointUI,
 ) {
     Box(
         modifier = Modifier

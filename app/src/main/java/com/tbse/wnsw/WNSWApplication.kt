@@ -1,13 +1,13 @@
 package com.tbse.wnsw
 
 import android.app.Application
-//import dagger.hilt.android.HiltAndroidApp
+import dagger.hilt.android.HiltAndroidApp
 
 /**
  * Created by toddsmith on 5/19/21.
  * Copyright TBSE 2022
  */
-//@HiltAndroidApp
+@HiltAndroidApp
 class WNSWApplication : Application() {
 }
 

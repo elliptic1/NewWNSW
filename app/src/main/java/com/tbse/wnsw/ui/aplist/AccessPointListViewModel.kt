@@ -11,7 +11,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.tbse.wifi.support.ReceiverLiveData
-import com.tbse.wnsw.models.AccessPoint
+import com.tbse.wnsw.models.AccessPointUI
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -22,7 +22,7 @@ sealed interface AccessPointListUiState {
     object NoAPs : AccessPointListUiState
 
     data class HasListOfAPs(
-        val aps: List<AccessPoint>,
+        val aps: List<AccessPointUI>,
     ) : AccessPointListUiState
 
 }
@@ -30,7 +30,7 @@ sealed interface AccessPointListUiState {
 private data class AccessPointListViewModelState(
     val isLoading: Boolean,
     val hasScanResult: Boolean,
-    val aps: List<AccessPoint>,
+    val aps: List<AccessPointUI>,
 ) {
     fun toUiState(): AccessPointListUiState =
         if (!hasScanResult) {

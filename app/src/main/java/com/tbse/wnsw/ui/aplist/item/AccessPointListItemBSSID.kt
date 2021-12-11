@@ -1,7 +1,6 @@
 package com.tbse.wnsw.ui.aplist.item
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
@@ -15,8 +14,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tbse.wnsw.R
-import com.tbse.wnsw.models.AccessPoint
-import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProvider
 import com.tbse.wnsw.ui.aplist.preview.BSSIDPreviewProvider
 
 /**
