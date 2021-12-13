@@ -7,7 +7,7 @@ import kotlin.random.Random.Default.nextInt
  * Copyright TBSE 2022
  */
 class RandomString {
-    fun random(): String = List(nextInt(12)) {
+    fun random(): String = List(nextInt(6, 20)) {
         (('a'..'z') + ('A'..'Z') + ('0'..'9')).random()
     }.joinToString("")
 }
