@@ -5,9 +5,7 @@
 package com.tbse.wnsw.ui.aplist.item
 
 import android.net.MacAddress
-import android.net.wifi.WifiManager
 import android.net.wifi.WifiNetworkSuggestion
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,7 +19,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -34,6 +31,8 @@ fun AccessPointListItemSuggestSwitch(
     @PreviewParameter(
         provider = AccessPointPreviewProvider::class
     ) accessPoint: AccessPointUI,
+    addNetworkSuggestions: (List<WifiNetworkSuggestion>) -> Unit = {},
+    removeNetworkSuggestions: (List<WifiNetworkSuggestion>) -> Unit = {},
 ) {
     Box(
         modifier = Modifier
@@ -48,9 +47,7 @@ fun AccessPointListItemSuggestSwitch(
         val switchState = remember {
             mutableStateOf(accessPoint.isSuggested)
         }
-        val wifiManager = LocalContext
-            .current
-            .getSystemService(AppCompatActivity.WIFI_SERVICE) as WifiManager
+
         Switch(
             enabled = true,
             checked = switchState.value,
@@ -58,25 +55,23 @@ fun AccessPointListItemSuggestSwitch(
             onCheckedChange = {
                 switchState.value = it
                 if (it) {
-                    wifiManager
-                        .addNetworkSuggestions(
-                            listOf(
-                                WifiNetworkSuggestion.Builder()
-                                    .setBssid(MacAddress.fromString(accessPoint.BSSID))
-                                    .setSsid(accessPoint.SSID)
-                                    .build()
-                            )
+                    addNetworkSuggestions(
+                        listOf(
+                            WifiNetworkSuggestion.Builder()
+                                .setBssid(MacAddress.fromString(accessPoint.BSSID))
+                                .setSsid(accessPoint.SSID)
+                                .build()
                         )
+                    )
                 } else {
-                    wifiManager
-                        .removeNetworkSuggestions(
-                            listOf(
-                                WifiNetworkSuggestion.Builder()
-                                    .setBssid(MacAddress.fromString(accessPoint.BSSID))
-                                    .setSsid(accessPoint.SSID)
-                                    .build()
-                            )
+                    removeNetworkSuggestions(
+                        listOf(
+                            WifiNetworkSuggestion.Builder()
+                                .setBssid(MacAddress.fromString(accessPoint.BSSID))
+                                .setSsid(accessPoint.SSID)
+                                .build()
                         )
+                    )
                 }
             },
             modifier = Modifier

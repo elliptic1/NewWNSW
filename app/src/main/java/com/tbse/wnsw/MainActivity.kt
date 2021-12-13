@@ -9,6 +9,7 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.wifi.WifiManager
 import android.net.wifi.WifiManager.SCAN_RESULTS_AVAILABLE_ACTION
+import android.net.wifi.WifiNetworkSuggestion
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
@@ -46,7 +47,9 @@ class MainActivity : AppCompatActivity(),
 
     private var receiver: ScanResultsBroadcastReceiver? = null
     private lateinit var intentFilter: IntentFilter
-
+    private val wifiManager: WifiManager? by lazy {
+        application.getSystemService(WIFI_SERVICE) as WifiManager
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -93,7 +96,6 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun init() {
-        val wifiManager = getWifiManager()
         apTransformer = ScanResultToAccessPointTransformer()
 
         setContent {
@@ -106,13 +108,15 @@ class MainActivity : AppCompatActivity(),
             NewWNSWTheme {
                 Surface(color = MaterialTheme.colors.background) {
                     if (wifiManager != null) {
-                        AccessPointList(
-                            itemViewStates =
-                            wifiManager
-                                .scanResults
-                                .map { apTransformer(it, wifiManager) },
-                            setLastLoad = setLastLoad
-                        )
+                        wifiManager?.let { wm ->
+                            AccessPointList(
+                                itemViewStates =
+                                wm.scanResults?.map { apTransformer(it, wm) } ?: listOf(),
+                                setLastLoad = setLastLoad,
+                                addNetworkSuggestions = ::addNetworkSuggestions,
+                                removeNetworkSuggestions = ::removeNetworkSuggestions
+                            )
+                        }
                     } else {
                         Text("Need permissions")
                     }
@@ -120,7 +124,6 @@ class MainActivity : AppCompatActivity(),
             }
         }
     }
-
 
     override fun onPause() {
         super.onPause()
@@ -132,12 +135,6 @@ class MainActivity : AppCompatActivity(),
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         init()
-    }
-
-    private fun getWifiManager(): WifiManager? {
-        return if (hasPermissions()) {
-            application.getSystemService(WIFI_SERVICE) as WifiManager
-        } else null
     }
 
     companion object {
@@ -178,6 +175,14 @@ class MainActivity : AppCompatActivity(),
         )
     }
 
+    private fun addNetworkSuggestions(list: List<WifiNetworkSuggestion>) {
+        wifiManager?.addNetworkSuggestions(list)
+    }
+
+    private fun removeNetworkSuggestions(list: List<WifiNetworkSuggestion>) {
+        wifiManager?.removeNetworkSuggestions(list)
+    }
+
 }
 
 @Preview(showBackground = true)
@@ -186,7 +191,10 @@ fun DefaultPreview() {
     NewWNSWTheme {
         AccessPointList(
             itemViewStates =
-            AccessPointPreviewProviderMany().values.toList()
-        ) {}
+            AccessPointPreviewProviderMany().values.toList(),
+            setLastLoad = {},
+            addNetworkSuggestions = {},
+            removeNetworkSuggestions = {}
+        )
     }
 }

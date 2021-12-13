@@ -1,5 +1,6 @@
 package com.tbse.wnsw.ui.aplist.item
 
+import android.net.wifi.WifiNetworkSuggestion
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,6 +27,8 @@ fun AccessPointListItem(
     @PreviewParameter(
         provider = AccessPointPreviewProvider::class
     ) accessPoint: AccessPointUI,
+    addNetworkSuggestions: (List<WifiNetworkSuggestion>) -> Unit = {},
+    removeNetworkSuggestions: (List<WifiNetworkSuggestion>) -> Unit = {},
 ) {
     Row(
         Modifier
@@ -49,7 +52,11 @@ fun AccessPointListItem(
                 .fillMaxWidth()
                 .fillMaxHeight()
         ) {
-            AccessPointListItemSuggestSwitch(accessPoint)
+            AccessPointListItemSuggestSwitch(
+                accessPoint,
+                addNetworkSuggestions,
+                removeNetworkSuggestions
+            )
             AccessPointListItemIconRow(accessPoint)
         }
     }

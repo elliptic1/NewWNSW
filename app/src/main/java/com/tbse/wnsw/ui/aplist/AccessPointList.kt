@@ -1,15 +1,18 @@
 package com.tbse.wnsw.ui.aplist
 
+import android.net.wifi.WifiManager
+import android.net.wifi.WifiNetworkSuggestion
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.tbse.wnsw.TAG
 import com.tbse.wnsw.models.AccessPointUI
 import com.tbse.wnsw.ui.aplist.item.AccessPointListItem
-import java.time.LocalTime
 
 /**
  * Created by toddsmith on 5/15/21.
@@ -20,6 +23,8 @@ fun AccessPointList(
     modifier: Modifier = Modifier,
     itemViewStates: List<AccessPointUI>,
     setLastLoad: () -> Unit,
+    addNetworkSuggestions: (List<WifiNetworkSuggestion>) -> Unit = {},
+    removeNetworkSuggestions: (List<WifiNetworkSuggestion>) -> Unit = {},
 ) {
     Scaffold(
         topBar = {
@@ -31,7 +36,9 @@ fun AccessPointList(
                     items = itemViewStates,
                     key = { data -> data.BSSID }
                 ) { data ->
-                    AccessPointListItem(accessPoint = data)
+                    AccessPointListItem(accessPoint = data,
+                        addNetworkSuggestions,
+                        removeNetworkSuggestions)
                 }
             }
         },
