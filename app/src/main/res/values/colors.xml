@@ -8,10 +8,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="green">#00E676</color>
-    <color name="darkgreen">#00c853</color>
+    <color name="lightgreen">#5efc82</color>
+    <color name="green">#00c853</color>
+    <color name="darkgreen">#009624</color>
     <color name="blue">#81D4FA</color>
-    <color name="darkgrey">#424242</color>
+    <color name="grey">#424242</color>
+    <color name="darkgrey">#1b1b1b</color>
+    <color name="lightgrey">#6d6d6d</color>
     <color name="clouds">#FFF5F5F5</color>
     <color name="concrete">#E0E0E0</color>
     <color name="red">#FF3300</color>

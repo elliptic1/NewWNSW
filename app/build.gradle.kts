@@ -77,4 +77,7 @@ dependencies {
     // Dagger - Hilt
     implementation("com.google.dagger:hilt-android:2.37")
     kapt("com.google.dagger:hilt-android-compiler:2.37")
+
+    // Compose Navigaton
+    implementation("androidx.navigation:navigation-compose:2.4.0-beta02")
 }

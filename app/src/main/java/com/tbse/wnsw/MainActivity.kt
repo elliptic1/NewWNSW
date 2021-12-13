@@ -11,23 +11,13 @@ import android.net.wifi.WifiManager
 import android.net.wifi.WifiManager.SCAN_RESULTS_AVAILABLE_ACTION
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.tbse.wnsw.models.transformers.ScanResultToAccessPointTransformer
@@ -105,9 +95,13 @@ class MainActivity : AppCompatActivity(),
     private fun init() {
         val wifiManager = getWifiManager()
         apTransformer = ScanResultToAccessPointTransformer()
+
         setContent {
             val lastLoad = remember {
                 mutableStateOf(LocalTime.now())
+            }
+            val setLastLoad: () -> Unit = {
+                lastLoad.value = LocalTime.now()
             }
             NewWNSWTheme {
                 Surface(color = MaterialTheme.colors.background) {
@@ -117,24 +111,8 @@ class MainActivity : AppCompatActivity(),
                             wifiManager
                                 .scanResults
                                 .map { apTransformer(it, wifiManager) },
-                            lastLoad = lastLoad.value
+                            setLastLoad = setLastLoad
                         )
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight()
-                                .padding(20.dp),
-                            horizontalArrangement = Arrangement.End,
-                            verticalAlignment = Alignment.Bottom
-                        ) {
-                            FloatingActionButton(
-                                backgroundColor = Color.Green,
-                                content = { FABContent() },
-                                onClick = {
-                                    lastLoad.value = LocalTime.now()
-                                }
-                            )
-                        }
                     } else {
                         Text("Need permissions")
                     }
@@ -143,10 +121,6 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    @Composable
-    fun FABContent() {
-        Text(text = "R")
-    }
 
     override fun onPause() {
         super.onPause()
@@ -212,8 +186,7 @@ fun DefaultPreview() {
     NewWNSWTheme {
         AccessPointList(
             itemViewStates =
-            AccessPointPreviewProviderMany().values.toList(),
-            lastLoad = LocalTime.now()
-        )
+            AccessPointPreviewProviderMany().values.toList()
+        ) {}
     }
 }

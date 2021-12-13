@@ -6,5 +6,5 @@ package com.tbse.tbse.wifi.database
  */
 object Constants {
     const val DATABASE_NAME = "ap_database"
-    const val AP_TABLE = "ap_table"
+    const val AP_TABLE_NAME = "ap_table"
 }

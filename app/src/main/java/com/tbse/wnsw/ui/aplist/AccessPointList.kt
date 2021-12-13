@@ -3,6 +3,7 @@ package com.tbse.wnsw.ui.aplist
 import android.util.Log
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.tbse.wnsw.TAG
@@ -18,16 +19,28 @@ import java.time.LocalTime
 fun AccessPointList(
     modifier: Modifier = Modifier,
     itemViewStates: List<AccessPointUI>,
-    lastLoad: LocalTime
+    setLastLoad: () -> Unit,
 ) {
-    LazyColumn(modifier = modifier) {
-        items(
-            items = itemViewStates,
-            key = { data -> data.BSSID }
-        ) { data ->
-            AccessPointListItem(accessPoint = data)
+    Scaffold(
+        topBar = {
+            ApListAppBar()
+        },
+        content = {
+            LazyColumn(modifier = modifier) {
+                items(
+                    items = itemViewStates,
+                    key = { data -> data.BSSID }
+                ) { data ->
+                    AccessPointListItem(accessPoint = data)
+                }
+            }
+        },
+        floatingActionButton = {
+            APListFAB(
+                setLastLoad = setLastLoad
+            )
         }
-    }
+    )
 }
 
 private fun List<AccessPointUI>.log() {

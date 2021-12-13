@@ -29,7 +29,7 @@ fun AccessPointListItem(
 ) {
     Row(
         Modifier
-            .background(colorResource(R.color.darkgrey))
+            .background(colorResource(R.color.grey))
             .fillMaxWidth()
             .height(90.dp)
     ) {

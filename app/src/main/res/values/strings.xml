@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">WNSW</string>
+    <string name="app_name">AP Pro</string>
+
+    <string name="refresh">Refresh</string>
 </resources>
