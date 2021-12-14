@@ -1,15 +1,18 @@
 package com.tbse.wnsw.ui.aplist
 
-import android.net.wifi.WifiManager
 import android.net.wifi.WifiNetworkSuggestion
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import android.view.MotionEvent
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import com.tbse.wnsw.R
 import com.tbse.wnsw.TAG
 import com.tbse.wnsw.models.AccessPointUI
 import com.tbse.wnsw.ui.aplist.item.AccessPointListItem
@@ -36,9 +39,22 @@ fun AccessPointList(
                     items = itemViewStates,
                     key = { data -> data.BSSID }
                 ) { data ->
+                    val isClicked = remember { mutableStateOf(false) }
+                    fun onItemTouch(motionEvent: MotionEvent): Boolean {
+                        val ret = when (motionEvent.action) {
+                            MotionEvent.ACTION_DOWN -> true
+                            MotionEvent.ACTION_MOVE -> true
+                            else -> false
+                        }
+                        isClicked.value = ret
+                        return ret
+                    }
                     AccessPointListItem(accessPoint = data,
                         addNetworkSuggestions,
-                        removeNetworkSuggestions)
+                        removeNetworkSuggestions,
+                        ::onItemTouch,
+                        getBGColor(isClicked = isClicked.value)
+                    )
                 }
             }
         },
@@ -48,6 +64,25 @@ fun AccessPointList(
             )
         }
     )
+}
+
+@Composable
+private fun getBGColor(isClicked: Boolean): Color {
+    return colorResource(
+        if (isClicked.not()) {
+            R.color.grey
+        } else {
+            R.color.green
+        }
+    )
+}
+
+private fun onItemTouch(motionEvent: MotionEvent): Boolean {
+    return when (motionEvent.action) {
+        MotionEvent.ACTION_DOWN -> true
+        MotionEvent.ACTION_MOVE -> true
+        else -> false
+    }
 }
 
 private fun List<AccessPointUI>.log() {
