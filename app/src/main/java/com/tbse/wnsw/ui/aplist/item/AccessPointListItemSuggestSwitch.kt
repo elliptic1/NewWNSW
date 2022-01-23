@@ -20,17 +20,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.tbse.wnsw.models.AccessPointUI
 import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProvider
 
-@Preview
 @Composable
 fun AccessPointListItemSuggestSwitch(
-    @PreviewParameter(
-        provider = AccessPointPreviewProvider::class
-    ) accessPoint: AccessPointUI,
+    accessPoint: AccessPointUI,
     addNetworkSuggestions: (List<WifiNetworkSuggestion>) -> Unit = {},
     removeNetworkSuggestions: (List<WifiNetworkSuggestion>) -> Unit = {},
 ) {
@@ -52,25 +48,15 @@ fun AccessPointListItemSuggestSwitch(
             enabled = true,
             checked = switchState.value,
             colors = SwitchDefaults.colors(),
-            onCheckedChange = {
-                switchState.value = it
-                if (it) {
+            onCheckedChange = { newValue ->
+                switchState.value = newValue
+                if (newValue) {
                     addNetworkSuggestions(
-                        listOf(
-                            WifiNetworkSuggestion.Builder()
-                                .setBssid(MacAddress.fromString(accessPoint.BSSID))
-                                .setSsid(accessPoint.SSID)
-                                .build()
-                        )
+                        getWifiNetworkSuggestionList(accessPoint)
                     )
                 } else {
                     removeNetworkSuggestions(
-                        listOf(
-                            WifiNetworkSuggestion.Builder()
-                                .setBssid(MacAddress.fromString(accessPoint.BSSID))
-                                .setSsid(accessPoint.SSID)
-                                .build()
-                        )
+                        getWifiNetworkSuggestionList(accessPoint)
                     )
                 }
             },
@@ -81,3 +67,23 @@ fun AccessPointListItemSuggestSwitch(
     }
 }
 
+private fun getWifiNetworkSuggestionList(ap: AccessPointUI): List<WifiNetworkSuggestion> {
+    return listOf(
+        WifiNetworkSuggestion.Builder()
+            .setBssid(MacAddress.fromString(ap.BSSID))
+            .setSsid(ap.SSID)
+            .build()
+    )
+}
+
+@Preview
+@Composable
+fun AccessPointListItemSuggestSwitchPreview(
+    accessPoint: AccessPointUI = AccessPointPreviewProvider().values.first(),
+    addNetworkSuggestions: (List<WifiNetworkSuggestion>) -> Unit = {},
+    removeNetworkSuggestions: (List<WifiNetworkSuggestion>) -> Unit = {},
+) {
+    AccessPointListItemSuggestSwitch(
+        accessPoint, {}, {}
+    )
+}

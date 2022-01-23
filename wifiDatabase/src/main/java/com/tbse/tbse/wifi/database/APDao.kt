@@ -1,9 +1,11 @@
 package com.tbse.tbse.wifi.database
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -21,5 +23,14 @@ interface APDao {
 
     @Insert(onConflict = REPLACE)
     suspend fun insertAP(ap: AccessPoint)
+
+    @Update
+    suspend fun updateAP(ap: AccessPoint)
+
+    @Delete
+    suspend fun deleteAP(ap: AccessPoint)
+
+    @Query("DELETE FROM ap_table")
+    suspend fun deleteAllAPs()
 
 }

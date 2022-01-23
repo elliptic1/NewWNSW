@@ -1,6 +1,5 @@
 package com.tbse.tbse.wifi.database
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.tbse.tbse.wifi.database.Constants.AP_TABLE_NAME
@@ -12,6 +11,14 @@ import com.tbse.tbse.wifi.database.Constants.AP_TABLE_NAME
 @Entity(tableName = AP_TABLE_NAME)
 data class AccessPoint(
     @PrimaryKey(autoGenerate = true) val id: Int,
-    @ColumnInfo(name = "bssid") val bssid: String,
-    val ssid: String
+    val bssid: String,
+    val ssid: String,
+    val capabilities: String,
+    val frequency: Int,
+    val level: Int,
+    val strength: Int,
+    val channel: Int,
+    val latitude: Double,
+    val longitude: Double,
+    val isSuggested: Boolean,
 )

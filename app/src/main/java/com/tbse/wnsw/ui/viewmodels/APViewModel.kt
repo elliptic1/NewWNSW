@@ -2,6 +2,8 @@ package com.tbse.wnsw.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tbse.wnsw.domain.di.ModelMapper
+import com.tbse.wnsw.domain.models.AccessPointDomain
 import com.tbse.wnsw.domain.repositories.APRepository
 import com.tbse.wnsw.models.AccessPointUI
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class APViewModel @Inject constructor(
     private val repository: APRepository,
+    private val mapper: ModelMapper<AccessPointDomain, AccessPointUI>,
 ) : ViewModel() {
 
     private val _allAPs = MutableStateFlow<List<AccessPointUI>>(emptyList())
@@ -26,21 +29,8 @@ class APViewModel @Inject constructor(
 
     fun getAllAPs() {
         viewModelScope.launch {
-            repository.getAllAps.collect {
-                _allAPs.value = it.map { ap ->
-                    AccessPointUI(
-                        BSSID = ap.bssid,
-                        SSID = ap.ssid,
-                        capabilities = "cap",
-                        frequency = 1,
-                        level = 1,
-                        strength = 1,
-                        channel = 1,
-                        latitude = 1.0,
-                        longitude = 1.0,
-                        isSuggested = true
-                    )
-                }
+            repository.getAllAps.collect { list ->
+                _allAPs.value = list.map { mapper(it) }
             }
         }
     }

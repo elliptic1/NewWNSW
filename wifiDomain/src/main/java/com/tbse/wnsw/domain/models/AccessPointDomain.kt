@@ -5,6 +5,14 @@ package com.tbse.wnsw.domain.models
  * Copyright TBSE 2022
  */
 data class AccessPointDomain(
-    val ssid: String,
-    val bssid: String,
+    val BSSID: String,
+    val SSID: String,
+    val capabilities: String,
+    val frequency: Int,
+    val level: Int,
+    val strength: Int,
+    val channel: Int,
+    val latitude: Double,
+    val longitude: Double,
+    val isSuggested: Boolean,
 )

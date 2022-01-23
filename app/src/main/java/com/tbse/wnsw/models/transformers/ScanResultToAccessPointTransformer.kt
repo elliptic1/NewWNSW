@@ -4,13 +4,11 @@ import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
 import com.tbse.wnsw.models.AccessPointUI
 
-//import javax.inject.Inject
-
 /**
  * Created by toddsmith on 5/19/21.
  * Copyright TBSE 2022
  */
-class ScanResultToAccessPointTransformer constructor() {
+class ScanResultToAccessPointTransformer {
     operator fun invoke(scanResult: ScanResult, wifiManager: WifiManager): AccessPointUI {
         return AccessPointUI(
             BSSID = scanResult.BSSID,
