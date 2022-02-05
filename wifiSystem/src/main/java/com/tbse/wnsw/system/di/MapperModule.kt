@@ -1,8 +1,10 @@
-package com.tbse.wnsw.domain.di
+package com.tbse.wnsw.system.di
 
+import android.net.wifi.ScanResult
+import android.net.wifi.WifiManager
 import com.tbse.tbse.wifi.database.AccessPoint
 import com.tbse.wifi.support.ModelMapper
-import com.tbse.wnsw.domain.models.AccessPointDomain
+import com.tbse.wnsw.system.mapper.ScanResultMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,14 +19,10 @@ import javax.inject.Singleton
 class MapperModule {
     @Singleton
     @Provides
-    fun provideAccessPointDomainMapper(): ModelMapper<AccessPoint, AccessPointDomain> {
-        return AccessPointDomainMapper()
-    }
-
-    @Singleton
-    @Provides
-    fun provideAccessPointMapper(): ModelMapper<AccessPointDomain, AccessPoint> {
-        return AccessPointDatabaseMapper()
+    fun provideScanResultMapper(
+        wifiManager: WifiManager,
+    ): ModelMapper<ScanResult, AccessPoint> {
+        return ScanResultMapper(wifiManager)
     }
 
 }

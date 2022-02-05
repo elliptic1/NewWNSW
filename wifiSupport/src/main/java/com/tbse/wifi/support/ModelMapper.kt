@@ -1,4 +1,4 @@
-package com.tbse.wnsw.domain.di
+package com.tbse.wifi.support
 
 /**
  * Created by toddsmith on 1/6/22.

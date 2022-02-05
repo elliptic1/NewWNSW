@@ -1,6 +1,6 @@
 package com.tbse.wnsw.models.mapper
 
-import com.tbse.wnsw.domain.di.ModelMapper
+import com.tbse.wifi.support.ModelMapper
 import com.tbse.wnsw.domain.models.AccessPointDomain
 import com.tbse.wnsw.models.AccessPointUI
 import javax.inject.Inject

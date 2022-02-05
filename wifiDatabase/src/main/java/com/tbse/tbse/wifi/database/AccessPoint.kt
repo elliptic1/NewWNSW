@@ -1,6 +1,7 @@
 package com.tbse.tbse.wifi.database
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.tbse.tbse.wifi.database.Constants.AP_TABLE_NAME
 
@@ -8,9 +9,12 @@ import com.tbse.tbse.wifi.database.Constants.AP_TABLE_NAME
  * Created by toddsmith on 11/8/21.
  * Copyright TBSE 2022
  */
-@Entity(tableName = AP_TABLE_NAME)
+@Entity(
+    tableName = AP_TABLE_NAME,
+    indices = [Index(value = ["bssid"], unique = true)]
+)
 data class AccessPoint(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val bssid: String,
     val ssid: String,
     val capabilities: String,

@@ -6,7 +6,7 @@ import com.tbse.wnsw.domain.models.AccessPointDomain
 /**
  * Created by toddsmith on 1/23/22.
  */
-class AccessPointDomainMapper: ModelMapper<AccessPoint, AccessPointDomain> {
+class AccessPointDomainMapper: com.tbse.wifi.support.ModelMapper<AccessPoint, AccessPointDomain> {
     override operator fun invoke(input: AccessPoint): AccessPointDomain {
         return with(input) {
             AccessPointDomain(

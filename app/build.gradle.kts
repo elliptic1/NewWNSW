@@ -6,7 +6,7 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
-val composeVersion  = "1.1.0-beta02" // https://developer.android.com/jetpack/androidx/releases/compose#versions
+val composeVersion  = "1.1.0-rc03" // https://developer.android.com/jetpack/androidx/releases/compose#versions
 
 android {
     compileSdk = 31
@@ -49,8 +49,8 @@ android {
 dependencies {
 
     implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.0")
-    implementation("com.google.android.material:material:1.4.0")
+    implementation("androidx.appcompat:appcompat:1.4.1")
+    implementation("com.google.android.material:material:1.5.0")
     implementation("androidx.compose.ui:ui:$composeVersion")
     implementation("androidx.compose.material:material:$composeVersion")
     implementation("androidx.compose.ui:ui-tooling:$composeVersion") {
@@ -75,8 +75,8 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.1.0-beta04")
 
     // Dagger - Hilt
-    implementation("com.google.dagger:hilt-android:2.37")
-    kapt("com.google.dagger:hilt-android-compiler:2.37")
+    implementation("com.google.dagger:hilt-android:2.40.5")
+    kapt("com.google.dagger:hilt-android-compiler:2.40.5")
 
     // Compose Navigaton
     implementation("androidx.navigation:navigation-compose:2.4.0-beta02")

@@ -14,5 +14,5 @@ data class AccessPointDomain(
     val channel: Int,
     val latitude: Double,
     val longitude: Double,
-    val isSuggested: Boolean,
+    val isSuggested: Boolean
 )

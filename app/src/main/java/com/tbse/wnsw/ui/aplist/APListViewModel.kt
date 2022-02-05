@@ -7,48 +7,57 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import android.net.wifi.WifiManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.tbse.wifi.support.ReceiverLiveData
 import com.tbse.wnsw.models.AccessPointUI
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
 
-sealed interface AccessPointListUiState {
+sealed interface APListUiState {
 
-    object NoAPs : AccessPointListUiState
+    object NoAPs : APListUiState
 
     data class HasListOfAPs(
         val aps: List<AccessPointUI>,
-    ) : AccessPointListUiState
+    ) : APListUiState
 
 }
 
-private data class AccessPointListViewModelState(
+private data class APListViewModelState(
     val isLoading: Boolean,
     val hasScanResult: Boolean,
     val aps: List<AccessPointUI>,
 ) {
-    fun toUiState(): AccessPointListUiState =
-        if (!hasScanResult) {
-            AccessPointListUiState.NoAPs
-        } else {
-            AccessPointListUiState.HasListOfAPs(
+    fun toUiState(): APListUiState =
+        if (hasScanResult) {
+            APListUiState.HasListOfAPs(
                 aps = aps
             )
+        } else {
+            APListUiState.NoAPs
         }
 }
 
-class AccessPointListViewModel(
+@HiltViewModel
+class APListViewModel @Inject constructor(
     application: Application,
+    wifiManager: WifiManager,
 //    wifiScanRepository: WifiScanRepository
 ) : AndroidViewModel(application) {
 
+    init {
+        wifiManager.startScan()
+    }
+
     private val viewModelState = MutableStateFlow(
-        AccessPointListViewModelState(
+        APListViewModelState(
             isLoading = true,
             hasScanResult = false,
             aps = listOf()
@@ -64,9 +73,9 @@ class AccessPointListViewModel(
             viewModelState.value.toUiState()
         )
 
-    val activeNetworkInfoLiveData: LiveData<NetworkInfo?> =
-        ReceiverLiveData(getApplication(),
-            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)) { context: Context, intent: Intent? ->
-            (context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
-        }
+//    val activeNetworkInfoLiveData: LiveData<NetworkInfo?> =
+//        ReceiverLiveData(getApplication(),
+//            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)) { context: Context, intent: Intent? ->
+//            (context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
+//        }
 }

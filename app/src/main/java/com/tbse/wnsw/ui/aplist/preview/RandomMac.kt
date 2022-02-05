@@ -12,6 +12,6 @@ internal object RandomMac {
         get() {
             return (0..5).joinToString(":") {
                 String.format("%02x", nextInt(255))
-            }.toUpperCase(Locale.ROOT)
+            }.uppercase()
         }
 }

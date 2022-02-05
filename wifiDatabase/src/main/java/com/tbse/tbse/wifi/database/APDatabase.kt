@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
  * Created by toddsmith on 12/7/21.
  * Copyright TBSE 2022
  */
-@Database(entities = [AccessPoint::class], version = 1, exportSchema = false)
+@Database(entities = [AccessPoint::class], version = 2, exportSchema = false)
 abstract class APDatabase : RoomDatabase() {
     abstract fun apDao(): APDao
 }

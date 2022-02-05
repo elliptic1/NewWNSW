@@ -5,30 +5,34 @@ import android.Manifest.permission.ACCESS_WIFI_STATE
 import android.Manifest.permission.CHANGE_WIFI_STATE
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
 import android.net.wifi.WifiManager.SCAN_RESULTS_AVAILABLE_ACTION
 import android.net.wifi.WifiNetworkSuggestion
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.tbse.wnsw.models.transformers.ScanResultToAccessPointTransformer
-import com.tbse.wnsw.ui.aplist.AccessPointList
-import com.tbse.wnsw.ui.aplist.preview.AccessPointPreviewProviderMany
+import com.tbse.tbse.wifi.database.APDao
+import com.tbse.tbse.wifi.database.AccessPoint
+import com.tbse.wifi.support.ModelMapper
+import com.tbse.wnsw.system.extensions.registerReceiverAsFlow
+import com.tbse.wnsw.ui.aplist.APListViewModel
+import com.tbse.wnsw.ui.aplist.APProMainScreen
 import com.tbse.wnsw.ui.need_permissions.NeedPermissionsPage
 import com.tbse.wnsw.ui.theme.NewWNSWTheme
-import com.tbse.wnsw.wifiinfo.broadcast_receiver.ScanResultsBroadcastReceiver
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.onEach
 import java.time.LocalTime
+import javax.inject.Inject
 
 const val PERMISSION_REQUEST_LOCATION = 0
 
@@ -42,14 +46,16 @@ val requiredPermissions = setOf(
 class MainActivity : AppCompatActivity(),
     ActivityCompat.OnRequestPermissionsResultCallback {
 
-    //    @Inject
-    lateinit var apTransformer: ScanResultToAccessPointTransformer
+    @Inject
+    lateinit var wifiManager: WifiManager
 
-    private var receiver: ScanResultsBroadcastReceiver? = null
-    private lateinit var intentFilter: IntentFilter
-    private val wifiManager: WifiManager? by lazy {
-        application.getSystemService(WIFI_SERVICE) as WifiManager
-    }
+    @Inject
+    lateinit var mapScanResultToAccessPoint: ModelMapper<ScanResult, AccessPoint>
+
+    @Inject
+    lateinit var apDao: APDao
+
+    private val apViewModel by viewModels<APListViewModel>()
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -73,16 +79,32 @@ class MainActivity : AppCompatActivity(),
         super.onResume()
 
         if (hasPermissions()) {
-            receiver = ScanResultsBroadcastReceiver()
-            intentFilter = IntentFilter(SCAN_RESULTS_AVAILABLE_ACTION)
-            registerReceiver(receiver, intentFilter, null, null)
-
+            registerScanResultsReceiver()
             init()
-
         } else {
             requestPermissions()
         }
 
+    }
+
+    private fun registerScanResultsReceiver() {
+        applicationContext
+            .registerReceiverAsFlow(SCAN_RESULTS_AVAILABLE_ACTION)
+            .onEach { intent ->
+                wifiManager.scanResults
+                    .map {
+                        val ap = mapScanResultToAccessPoint(it)
+                        apDao.insertAP(ap)
+                    }
+                StringBuilder().apply {
+                    append("Action: ${intent.action}\n")
+                    append("URI: ${intent.toUri(Intent.URI_INTENT_SCHEME)}\n")
+                    toString().also { log ->
+                        Log.d(TAG, log)
+                        Toast.makeText(applicationContext, log, Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
     }
 
     private fun showNeedsPermissionsPage() {
@@ -96,8 +118,6 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun init() {
-        apTransformer = ScanResultToAccessPointTransformer()
-
         setContent {
             val lastLoad = remember {
                 mutableStateOf(LocalTime.now())
@@ -105,30 +125,17 @@ class MainActivity : AppCompatActivity(),
             val setLastLoad: () -> Unit = {
                 lastLoad.value = LocalTime.now()
             }
+
             NewWNSWTheme {
                 Surface(color = MaterialTheme.colors.background) {
-                    if (wifiManager != null) {
-                        wifiManager?.let { wm ->
-                            AccessPointList(
-                                itemViewStates =
-                                wm.scanResults?.map { apTransformer(it, wm) } ?: listOf(),
-                                setLastLoad = setLastLoad,
-                                addNetworkSuggestions = ::addNetworkSuggestions,
-                                removeNetworkSuggestions = ::removeNetworkSuggestions
-                            )
-                        }
-                    } else {
-                        Text("Need permissions")
-                    }
+                    APProMainScreen(
+                        apViewModel = apViewModel,
+                        setLastLoad = setLastLoad,
+                        addNetworkSuggestions = ::addNetworkSuggestions,
+                        removeNetworkSuggestions = ::removeNetworkSuggestions
+                    )
                 }
             }
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (receiver != null) {
-            unregisterReceiver(receiver)
         }
     }
 
@@ -176,25 +183,11 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun addNetworkSuggestions(list: List<WifiNetworkSuggestion>) {
-        wifiManager?.addNetworkSuggestions(list)
+        wifiManager.addNetworkSuggestions(list)
     }
 
     private fun removeNetworkSuggestions(list: List<WifiNetworkSuggestion>) {
-        wifiManager?.removeNetworkSuggestions(list)
+        wifiManager.removeNetworkSuggestions(list)
     }
 
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    NewWNSWTheme {
-        AccessPointList(
-            itemViewStates =
-            AccessPointPreviewProviderMany().values.toList(),
-            setLastLoad = {},
-            addNetworkSuggestions = {},
-            removeNetworkSuggestions = {}
-        )
-    }
 }
