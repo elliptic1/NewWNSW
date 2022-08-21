@@ -14,7 +14,7 @@ import dagger.hilt.components.SingletonComponent
  */
 @Module
 @InstallIn(SingletonComponent::class)
-class CommonModule() {
+class CommonModule {
     @Provides
     fun provideWifiManager(
         @ApplicationContext appContext: Context,
