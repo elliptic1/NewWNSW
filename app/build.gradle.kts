@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk = 30
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.tbse.wnsw"
         minSdk = 21
-        targetSdk = 30
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
