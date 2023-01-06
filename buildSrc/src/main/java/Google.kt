@@ -3,6 +3,7 @@
  */
 
 object Google {
-    private const val materialVersion = "1.4.0"
+    // https://mvnrepository.com/artifact/com.google.android.material/material?repo=google
+    private const val materialVersion = "1.7.0"
     const val material = "com.google.android.material:material:$materialVersion"
 }

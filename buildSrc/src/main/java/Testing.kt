@@ -32,4 +32,7 @@ object Testing {
 
     private const val testRunnerVersion = "1.4.0"
     const val testRunner = "androidx.test:runner:$testRunnerVersion"
+
+    private const val espressoVersion = "3.4.0"
+    const val espresso = "androidx.test.espresso:espresso-core:$espressoVersion"
 }

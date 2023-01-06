@@ -1,4 +1,3 @@
-
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -6,16 +5,14 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
-val composeVersion  = "1.1.0-rc03" // https://developer.android.com/jetpack/androidx/releases/compose#versions
-
 android {
-    compileSdk = 31
+    compileSdk = ProjectConfig.compileSdk
 
     defaultConfig {
-        applicationId = "com.tbse.wnsw"
-        minSdk = 30
-        versionCode = 1
-        versionName = "1.0"
+        applicationId = ProjectConfig.appId
+        minSdk = ProjectConfig.minSdk
+        versionCode = ProjectConfig.versionCode
+        versionName = ProjectConfig.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -26,7 +23,8 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro")
         }
     }
     compileOptions {
@@ -41,43 +39,41 @@ android {
     }
     composeOptions {
         // https://developer.android.com/jetpack/androidx/releases/compose-compiler
-        kotlinCompilerExtensionVersion = composeVersion
+        kotlinCompilerExtensionVersion = Compose.composeVersion
     }
 }
 
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.1")
-    implementation("com.google.android.material:material:1.5.0")
-    implementation("androidx.compose.ui:ui:$composeVersion")
-    implementation("androidx.compose.material:material:$composeVersion")
-    implementation("androidx.compose.ui:ui-tooling:$composeVersion") {
+    implementation(AndroidX.coreKtx)
+    implementation(AndroidX.appCompat)
+    implementation(Google.material)
+    implementation(Compose.ui)
+    implementation(Compose.material)
+    implementation(Compose.uiTooling) {
         because("@Preview annotation")
     }
 
     // https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-runtime-ktx
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
+    implementation(AndroidX.lifecycle)
 
     // https://androidx.tech/artifacts/activity/activity-compose/
-    implementation("androidx.activity:activity-compose:1.4.0")
+    implementation(Compose.activityCompose)
     implementation(project(mapOf("path" to ":wifiSupport")))
     implementation(project(mapOf("path" to ":wifiDomain")))
     implementation(project(mapOf("path" to ":wifiDatabase")))
     implementation(project(mapOf("path" to ":wifiSystem")))
 
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-
-//    https://mvnrepository.com/artifact/androidx.compose.ui/ui-test-junit4
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.1.0-beta04")
+    testImplementation(Testing.junit4)
+    androidTestImplementation(Testing.junitAndroidExt)
+    androidTestImplementation(Testing.espresso)
+    androidTestImplementation(Testing.composeUiTest)
 
     // Dagger - Hilt
-    implementation("com.google.dagger:hilt-android:2.40.5")
-    kapt("com.google.dagger:hilt-android-compiler:2.40.5")
+    implementation(DaggerHilt.hiltAndroid)
+    kapt(DaggerHilt.hiltCompiler)
 
-    // Compose Navigaton
-    implementation("androidx.navigation:navigation-compose:2.4.0-beta02")
+    // Compose Navigation
+    implementation(AndroidX.navigation)
 }

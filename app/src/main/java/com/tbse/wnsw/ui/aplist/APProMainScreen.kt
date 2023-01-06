@@ -57,13 +57,3 @@ fun APProMainScreen(
         }
     )
 }
-
-private fun List<AccessPointUI>.log() {
-    Log.d(TAG, "Access Points:")
-    this.forEachIndexed { index, ap ->
-        Log.d(TAG, " - $index. ${ap.SSID} [${ap.BSSID}]")
-        Log.d(TAG, " - - capabilities: ${ap.capabilities}")
-        Log.d(TAG, " - - channel: ${ap.channel}")
-    }
-    Log.d(TAG, "---------------")
-}

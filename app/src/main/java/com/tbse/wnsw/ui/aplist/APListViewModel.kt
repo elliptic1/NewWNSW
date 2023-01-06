@@ -1,17 +1,11 @@
 package com.tbse.wnsw.ui.aplist
 
 import android.app.Application
-import android.content.Context
-import android.content.Context.CONNECTIVITY_SERVICE
-import android.content.Intent
-import android.content.IntentFilter
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.net.wifi.WifiManager
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.tbse.wifi.support.ReceiverLiveData
+import com.tbse.wnsw.TAG
 import com.tbse.wnsw.models.AccessPointUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,6 +31,7 @@ private data class APListViewModelState(
 ) {
     fun toUiState(): APListUiState =
         if (hasScanResult) {
+            aps.log()
             APListUiState.HasListOfAPs(
                 aps = aps
             )
@@ -78,4 +73,14 @@ class APListViewModel @Inject constructor(
 //            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)) { context: Context, intent: Intent? ->
 //            (context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
 //        }
+}
+
+private fun List<AccessPointUI>.log() {
+    Log.d(TAG, "Access Points:")
+    this.forEachIndexed { index, ap ->
+        Log.d(TAG, " - $index. ${ap.SSID} [${ap.BSSID}]")
+        Log.d(TAG, " - - capabilities: ${ap.capabilities}")
+        Log.d(TAG, " - - channel: ${ap.channel}")
+    }
+    Log.d(TAG, "---------------")
 }
