@@ -8,10 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.tbse.wnsw.TAG
 import com.tbse.wnsw.models.AccessPointUI
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 sealed interface APListUiState {
@@ -48,7 +50,9 @@ class APListViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
 
     init {
-        wifiManager.startScan()
+        viewModelScope.launch(Dispatchers.IO) {
+            wifiManager.startScan()
+        }
     }
 
     private val viewModelState = MutableStateFlow(
