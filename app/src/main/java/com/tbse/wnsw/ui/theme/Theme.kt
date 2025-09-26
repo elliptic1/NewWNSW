@@ -2,9 +2,12 @@ package com.tbse.wnsw.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 
 private val DarkColorPalette = darkColors(
         primary = Purple200,
@@ -41,4 +44,14 @@ fun NewWNSWTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composabl
             shapes = Shapes,
             content = content
     )
+}
+
+@Preview
+@Composable
+private fun NewWNSWThemePreview() {
+    NewWNSWTheme {
+        Surface {
+            Text(text = "Theme Preview")
+        }
+    }
 }

@@ -2,8 +2,12 @@ package com.tbse.wnsw.ui.aplist
 
 import android.net.wifi.WifiNetworkSuggestion
 import android.view.MotionEvent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -78,4 +82,21 @@ fun APListLazyColumnPreview() {
         {},
         {}
     )
+}
+
+@Preview
+@Composable
+private fun GetBGColorPreview() {
+    Row {
+        Box(
+            modifier = Modifier
+                .size(32.dp)
+                .background(getBGColor(isClicked = false))
+        )
+        Box(
+            modifier = Modifier
+                .size(32.dp)
+                .background(getBGColor(isClicked = true))
+        )
+    }
 }

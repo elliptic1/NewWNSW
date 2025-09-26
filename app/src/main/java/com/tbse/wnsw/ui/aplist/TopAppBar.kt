@@ -10,6 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.tbse.wnsw.R
+import com.tbse.wnsw.ui.theme.NewWNSWTheme
 
 /**
  * Created by toddsmith on 12/13/21.
@@ -18,6 +19,14 @@ import com.tbse.wnsw.R
 @Composable
 fun ApListAppBar() {
     DefaultAppBar()
+}
+
+@Preview
+@Composable
+private fun PreviewApListAppBar() {
+    NewWNSWTheme {
+        ApListAppBar()
+    }
 }
 
 @Composable

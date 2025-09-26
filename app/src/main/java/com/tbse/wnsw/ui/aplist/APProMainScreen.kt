@@ -1,7 +1,6 @@
 package com.tbse.wnsw.ui.aplist
 
 import android.net.wifi.WifiNetworkSuggestion
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Scaffold
@@ -9,8 +8,10 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import com.tbse.wnsw.TAG
-import com.tbse.wnsw.models.AccessPointUI
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import com.tbse.wnsw.ui.aplist.preview.APListUiStatePreviewProvider
+import com.tbse.wnsw.ui.theme.NewWNSWTheme
 
 /**
  * Created by toddsmith on 5/15/21.
@@ -26,6 +27,21 @@ fun APProMainScreen(
 
     val uiState = apViewModel.uiState.collectAsState().value
 
+    APProMainScreenContent(
+        uiState = uiState,
+        setLastLoad = setLastLoad,
+        addNetworkSuggestions = addNetworkSuggestions,
+        removeNetworkSuggestions = removeNetworkSuggestions
+    )
+}
+
+@Composable
+private fun APProMainScreenContent(
+    uiState: APListUiState,
+    setLastLoad: () -> Unit,
+    addNetworkSuggestions: (List<WifiNetworkSuggestion>) -> Unit,
+    removeNetworkSuggestions: (List<WifiNetworkSuggestion>) -> Unit,
+) {
     Scaffold(
         topBar = {
             ApListAppBar()
@@ -56,4 +72,20 @@ fun APProMainScreen(
             )
         }
     )
+}
+
+@Preview
+@Composable
+private fun APProMainScreenPreview(
+    @PreviewParameter(APListUiStatePreviewProvider::class)
+    uiState: APListUiState,
+) {
+    NewWNSWTheme {
+        APProMainScreenContent(
+            uiState = uiState,
+            setLastLoad = {},
+            addNetworkSuggestions = {},
+            removeNetworkSuggestions = {}
+        )
+    }
 }
