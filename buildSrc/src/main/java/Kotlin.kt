@@ -3,5 +3,5 @@
  */
 // https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 object Kotlin {
-    const val version = "1.7.20"
+    const val version = "2.0.21"
 }
