@@ -10,4 +10,6 @@ interface APRepository {
     fun getAllAps(): Flow<List<AccessPointDomain>>
     fun getAp(bssid: String): Flow<AccessPointDomain>
     suspend fun insertAp(ap: AccessPointDomain)
+    suspend fun updateFavorite(bssid: String, isFavorite: Boolean)
+    fun getFavoritesByStrength(): Flow<List<AccessPointDomain>>
 }

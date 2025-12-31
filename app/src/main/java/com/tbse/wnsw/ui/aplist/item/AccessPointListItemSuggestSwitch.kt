@@ -29,6 +29,7 @@ fun AccessPointListItemSuggestSwitch(
     accessPoint: AccessPointUI,
     addNetworkSuggestions: (List<WifiNetworkSuggestion>) -> Unit = {},
     removeNetworkSuggestions: (List<WifiNetworkSuggestion>) -> Unit = {},
+    onFavoriteToggle: (String, Boolean) -> Unit = { _, _ -> },
 ) {
     Box(
         modifier = Modifier
@@ -50,6 +51,7 @@ fun AccessPointListItemSuggestSwitch(
             colors = SwitchDefaults.colors(),
             onCheckedChange = { newValue ->
                 switchState.value = newValue
+                onFavoriteToggle(accessPoint.BSSID, newValue)
                 if (newValue) {
                     addNetworkSuggestions(
                         getWifiNetworkSuggestionList(accessPoint)

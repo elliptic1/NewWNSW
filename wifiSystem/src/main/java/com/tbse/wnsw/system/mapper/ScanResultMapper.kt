@@ -2,6 +2,7 @@ package com.tbse.wnsw.system.mapper
 
 import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
+import android.os.Build
 import com.tbse.tbse.wifi.database.AccessPoint
 import com.tbse.wifi.support.ModelMapper
 import javax.inject.Inject
@@ -15,7 +16,7 @@ class ScanResultMapper @Inject constructor(
     override fun invoke(input: ScanResult): AccessPoint {
         return AccessPoint(
             bssid = input.BSSID,
-            ssid = input.SSID,
+            ssid = getSsid(input),
             capabilities = input.capabilities,
             frequency = input.frequency,
             level = input.level,
@@ -25,6 +26,15 @@ class ScanResultMapper @Inject constructor(
             longitude = 0.0,
             isSuggested = wifiManager.networkSuggestions.any { it.bssid.toString() == input.BSSID }
         )
+    }
+
+    @Suppress("DEPRECATION")
+    private fun getSsid(scanResult: ScanResult): String {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            scanResult.wifiSsid?.toString()?.removeSurrounding("\"") ?: scanResult.SSID ?: ""
+        } else {
+            scanResult.SSID ?: ""
+        }
     }
 
     private fun signalStrengthMapper(input: Int): Int {

@@ -37,4 +37,13 @@ class APRepositoryImpl @Inject constructor(
             dbMapper(ap)
         )
     }
+
+    override suspend fun updateFavorite(bssid: String, isFavorite: Boolean) {
+        apDao.updateFavorite(bssid, isFavorite)
+    }
+
+    override fun getFavoritesByStrength(): Flow<List<AccessPointDomain>> =
+        apDao.getFavoritesByStrength().map { list ->
+            list.map { domainMapper(it) }
+        }
 }

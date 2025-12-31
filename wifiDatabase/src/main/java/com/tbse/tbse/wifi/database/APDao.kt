@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface APDao {
 
-    @Query("SELECT * FROM ap_table ORDER BY ssid ASC")
+    @Query("SELECT * FROM ap_table ORDER BY CASE WHEN ssid = '' THEN 1 ELSE 0 END, ssid ASC")
     fun getAllAps(): Flow<List<AccessPoint>>
 
     @Query("SELECT * FROM ap_table WHERE bssid=:bssid LIMIT 1")
@@ -32,5 +32,11 @@ interface APDao {
 
     @Query("DELETE FROM ap_table")
     suspend fun deleteAllAPs()
+
+    @Query("UPDATE ap_table SET isSuggested = :isFavorite WHERE bssid = :bssid")
+    suspend fun updateFavorite(bssid: String, isFavorite: Boolean)
+
+    @Query("SELECT * FROM ap_table WHERE isSuggested = 1 ORDER BY level DESC")
+    fun getFavoritesByStrength(): Flow<List<AccessPoint>>
 
 }
