@@ -88,6 +88,7 @@ class MainActivity : ComponentActivity(),
             }
             val setLastLoad: () -> Unit = {
                 lastLoad.value = LocalTime.now()
+                triggerWifiScan()
             }
 
             NewWNSWTheme {
@@ -136,6 +137,7 @@ class MainActivity : ComponentActivity(),
         permissionState.value = granted
         if (granted) {
             startWifiScanCollection()
+            triggerWifiScan()
         } else {
             stopWifiScanCollection()
         }
@@ -213,6 +215,20 @@ class MainActivity : ComponentActivity(),
         lifecycleScope.launch(Dispatchers.IO) {
             val status = wifiManager.removeNetworkSuggestions(list)
             handleSuggestionStatus(status, false)
+        }
+    }
+
+    @Suppress("DEPRECATION")
+    private fun triggerWifiScan() {
+        lifecycleScope.launch {
+            try {
+                val started = wifiManager.startScan()
+                Log.d(TAG, "WiFi scan started: $started")
+                // Also persist any existing results immediately
+                persistLatestScanResults()
+            } catch (e: SecurityException) {
+                Log.w(TAG, "Missing permission to start WiFi scan", e)
+            }
         }
     }
 

@@ -3,7 +3,7 @@ package com.tbse.tbse.wifi.database
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy.REPLACE
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +21,7 @@ interface APDao {
     @Query("SELECT * FROM ap_table WHERE bssid=:bssid LIMIT 1")
     fun getAp(bssid: String): Flow<AccessPoint>
 
-    @Insert(onConflict = REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAP(ap: AccessPoint)
 
     @Update

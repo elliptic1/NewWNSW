@@ -3,9 +3,9 @@
  */
 object ProjectConfig {
     const val appId = "com.tbse.wnswfree"
-    const val compileSdk = 33
-    const val minSdk = 21
-    const val targetSdk = 33
+    const val compileSdk = 35
+    const val minSdk = 24
+    const val targetSdk = 35
     const val versionCode = 1
     const val versionName = "1.0"
 }

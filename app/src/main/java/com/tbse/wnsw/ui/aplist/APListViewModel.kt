@@ -5,7 +5,10 @@ import android.net.wifi.WifiManager
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.tbse.wifi.support.ModelMapper
 import com.tbse.wnsw.TAG
+import com.tbse.wnsw.domain.models.AccessPointDomain
+import com.tbse.wnsw.domain.repositories.APRepository
 import com.tbse.wnsw.models.AccessPointUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -46,13 +49,16 @@ private data class APListViewModelState(
 class APListViewModel @Inject constructor(
     application: Application,
     wifiManager: WifiManager,
-//    wifiScanRepository: WifiScanRepository
+    private val apRepository: APRepository,
+    private val accessPointMapper: ModelMapper<AccessPointDomain, AccessPointUI>
 ) : AndroidViewModel(application) {
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
+            @Suppress("DEPRECATION")
             wifiManager.startScan()
         }
+        observeAccessPoints()
     }
 
     private val viewModelState = MutableStateFlow(
@@ -72,11 +78,18 @@ class APListViewModel @Inject constructor(
             viewModelState.value.toUiState()
         )
 
-//    val activeNetworkInfoLiveData: LiveData<NetworkInfo?> =
-//        ReceiverLiveData(getApplication(),
-//            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)) { context: Context, intent: Intent? ->
-//            (context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
-//        }
+    private fun observeAccessPoints() {
+        viewModelScope.launch(Dispatchers.IO) {
+            apRepository.getAllAps().collect { domainList ->
+                val uiList = domainList.map { accessPointMapper(it) }
+                viewModelState.value = APListViewModelState(
+                    isLoading = false,
+                    hasScanResult = uiList.isNotEmpty(),
+                    aps = uiList
+                )
+            }
+        }
+    }
 }
 
 private fun List<AccessPointUI>.log() {
