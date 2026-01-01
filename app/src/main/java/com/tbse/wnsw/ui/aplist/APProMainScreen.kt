@@ -1,13 +1,17 @@
 package com.tbse.wnsw.ui.aplist
 
+import android.content.Intent
 import android.net.wifi.WifiNetworkSuggestion
+import android.provider.Settings
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.tbse.wnsw.models.AccessPointUI
@@ -25,8 +29,18 @@ fun APProMainScreen(
     addNetworkSuggestions: (List<WifiNetworkSuggestion>) -> Unit = {},
     removeNetworkSuggestions: (List<WifiNetworkSuggestion>) -> Unit = {},
 ) {
-
+    val context = LocalContext.current
     val uiState = apViewModel.uiState.collectAsState().value
+
+    LaunchedEffect(Unit) {
+        apViewModel.events.collect { event ->
+            when (event) {
+                is APListEvent.OpenWifiSettings -> {
+                    context.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
+                }
+            }
+        }
+    }
 
     APProMainScreenContent(
         uiState = uiState,
@@ -34,7 +48,7 @@ fun APProMainScreen(
         addNetworkSuggestions = addNetworkSuggestions,
         removeNetworkSuggestions = removeNetworkSuggestions,
         onFavoriteToggle = { bssid, isFavorite -> apViewModel.updateFavorite(bssid, isFavorite) },
-        onNetworkTap = { ap -> apViewModel.connectToNetwork(ap) }
+        onNetworkTap = { ap -> apViewModel.onNetworkTapped(ap) }
     )
 }
 
